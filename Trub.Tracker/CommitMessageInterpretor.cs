@@ -34,10 +34,4 @@ namespace Trub.Tracker
             return null;
         }
     }
-
-    public enum CardActionKind
-    {
-        Log,
-        Close
-    }
 }
