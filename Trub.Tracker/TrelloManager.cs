@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TrelloNet;
@@ -8,22 +9,33 @@ namespace Trub.Tracker
     public class TrelloManager : ITrelloManager
     {
         private readonly ITrello trello;
+        private bool isAuthorized;
 
         public TrelloManager(ITrello trello)
         {
             this.trello = trello;
-            if (trello == null)
-                this.trello = new Trello("08ef1643c5e214994f53fb67c115af43");
-            this.trello.Authorize("b98be4952d2086dfb322b8b28643b3bc2288b3983f2f99762f1bb24525c0d26f");
         }
 
         public IEnumerable<TrelloBoard> GetOpenBoards()
         {
+            if (isAuthorized)
             return trello.Boards.ForMe(BoardFilter.Open).Select(b => new TrelloBoard
             {
                 Id = b.Id,
                 Name = b.Name,
             });
+            throw new Exception("You must authorize before get open boards");
+        }
+
+        public string GetTrelloAuthUrl()
+        {
+            return trello.GetAuthorizationUrl("Trub", Scope.ReadWrite, Expiration.Never).ToString();
+        }
+
+        public void Authorize(string token = "f0220431655d1096c636251c5677f1844d2a2d82f9ac3ba6df72c8191c97763f")
+        {
+            trello.Authorize(token);
+            isAuthorized = true;
         }
     }
 }

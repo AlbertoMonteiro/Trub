@@ -15,6 +15,9 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
+using TreHub.DesignData;
+using TrelloNet;
+using Trub.Tracker;
 
 namespace TreHub.ViewModel
 {
@@ -31,16 +34,19 @@ namespace TreHub.ViewModel
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
-            ////if (ViewModelBase.IsInDesignModeStatic)
-            ////{
-            ////    // Create design time view services and models
-            ////    SimpleIoc.Default.Register<IDataService, DesignDataService>();
-            ////}
-            ////else
-            ////{
-            ////    // Create run time view services and models
-            ////    SimpleIoc.Default.Register<IDataService, DataService>();
-            ////}
+            if (ViewModelBase.IsInDesignModeStatic)
+            {
+                // Create design time view services and models
+                SimpleIoc.Default.Register<ITrelloManager, TrelloManagerDesign>();
+                SimpleIoc.Default.Register<IGitHubTracker, GitHubTrackerDesign>();
+            }
+            else
+            {
+                // Create run time view services and models
+                SimpleIoc.Default.Register<ITrelloManager, TrelloManager>();
+                SimpleIoc.Default.Register<ITrello>(() => new Trello("08ef1643c5e214994f53fb67c115af43"));
+                SimpleIoc.Default.Register<IGitHubTracker, GitHubTracker>();
+            }
 
             SimpleIoc.Default.Register<MainViewModel>();
         }

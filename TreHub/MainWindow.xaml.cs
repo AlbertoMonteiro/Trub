@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TreHub.ViewModel;
 
 namespace TreHub
 {
@@ -26,16 +27,13 @@ namespace TreHub
             InitializeComponent();
             Loaded += (sender, args) =>
             {
-                VisualStateManager.GoToElementState(grid, "FirstStep", true);
-                ThreadPool.QueueUserWorkItem(state =>
+                var mainViewModel = (MainViewModel)DataContext;
+                mainViewModel.PropertyChanged += (o, eventArgs) =>
                 {
-                    Thread.Sleep(3000);
-                    grid.Dispatcher.Invoke(() =>
-                    {
-                        VisualStateManager.GoToElementState(grid, "SecondStep", true);
-                    });
-                });
-
+                    if (eventArgs.PropertyName == "Step")
+                        VisualStateManager.GoToElementState(grid, mainViewModel.Step, true);
+                };
+                VisualStateManager.GoToElementState(grid, "FirstStep", true);
             };
         }
     }

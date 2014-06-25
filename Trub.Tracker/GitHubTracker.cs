@@ -18,7 +18,6 @@ namespace Trub.Tracker
                     Credentials = new Credentials("albertomonteiro", "MP@clan$123")
                 };
             #endregion
-
         }
 
         public void TrackNewCommits()
