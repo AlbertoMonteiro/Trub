@@ -58,9 +58,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TreHub\TreHub.csproj">
-      <Project>{C7178EDB-1D8C-43A9-A28B-5E3712914683}</Project>
-      <Name>TreHub</Name>
+    <ProjectReference Include="..\Trub.Tracker\Trub.Tracker.csproj">
+      <Project>{e156e172-bcab-42d4-9849-abace3e1c573}</Project>
+      <Name>Trub.Tracker</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
