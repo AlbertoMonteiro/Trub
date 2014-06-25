@@ -18,7 +18,7 @@ namespace TreHub.Models
                 throw new ArgumentException("Required commit message", "commitMessage");
 
             var result = new CardAction();
-            var match = Regex.Match(commitMessage,pattern);
+            var match = Regex.Match(commitMessage, pattern);
             if (match.Success)
             {
                 var cardIdGroup = match.Groups["cardId"];
@@ -28,7 +28,7 @@ namespace TreHub.Models
                 var actionGroup = match.Groups["action"];
                 if (actionGroup.Success)
                     result.Kind = CardActionKind.Close;
-                
+
                 return result;
             }
             return null;

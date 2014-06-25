@@ -39,15 +39,23 @@ namespace Trub.Tests
         [TestCase("Close"), TestCase("Closed"), TestCase("Fixed")]
         public void IfThereIsCloseCommandWrappedByBracketWithIdCardActionKindShouldBeClose(string command)
         {
-            var cardAction = commitMessageInterpretor.Interpret(string.Format("Ajustes no teste para validação de Conta a Receber [{0} #123456]", command));
+            var commitMessage = string.Format("Ajustes no teste para validação de Conta a Receber [{0} #{1}]", command, cardId);
+            var cardAction = commitMessageInterpretor.Interpret(commitMessage);
             cardAction.Kind.Should().Be.EqualTo(CardActionKind.Close);
         }
 
-        [Test]
-        public void IfThereIsCloseCommandWrappedByBracketWithIdCardIdShouldBeFilled()
+        [TestCase("Close"), TestCase("Closed"), TestCase("Fixed")]
+        public void IfThereIsCloseCommandWrappedByBracketWithIdCardIdShouldBeFilled(string command)
         {
-            var cardAction = commitMessageInterpretor.Interpret("Ajustes no teste para validação de Conta a Receber [Close #123456]");
-            cardAction.CardId.Should().Be.EqualTo("123456");
+            var commitMessage = string.Format("Ajustes no teste para validação de Conta a Receber [{0} #{1}]", command, cardId);
+            var cardAction = commitMessageInterpretor.Interpret(commitMessage);
+            cardAction.CardId.Should().Be.EqualTo(cardId);
+        }
+
+        [Test]
+        public void IfCommitMessageIsEmptyShouldThrowArgumentException()
+        {
+            Assert.Throws<ArgumentException>(() => commitMessageInterpretor.Interpret(""), "Required commit message");
         }
     }
 }
