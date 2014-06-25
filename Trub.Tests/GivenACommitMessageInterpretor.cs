@@ -36,10 +36,10 @@ namespace Trub.Tests
             cardAction.CardId.Should().Be.EqualTo(cardId);
         }
 
-        [Test]
-        public void IfThereIsCloseCommandWrappedByBracketWithIdCardActionKindShouldBeClose()
+        [TestCase("Close"), TestCase("Closed"), TestCase("Fixed")]
+        public void IfThereIsCloseCommandWrappedByBracketWithIdCardActionKindShouldBeClose(string command)
         {
-            var cardAction = commitMessageInterpretor.Interpret("Ajustes no teste para validação de Conta a Receber [Close #123456]");
+            var cardAction = commitMessageInterpretor.Interpret(string.Format("Ajustes no teste para validação de Conta a Receber [{0} #123456]", command));
             cardAction.Kind.Should().Be.EqualTo(CardActionKind.Close);
         }
 
