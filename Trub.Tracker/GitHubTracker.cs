@@ -44,7 +44,7 @@ namespace Trub.Tracker
                 var allForOrg = github.Repository.GetAllForOrg(organization.Login);
                 allForOrg.Wait();
                 var repositories = allForOrg.Result;
-                repos.AddRange(repositories.Select(r => new GitHubRepository() { Name = r.Name, Owner = organization.Name }));
+                repos.AddRange(repositories.Select(r => new GitHubRepository() { Name = r.Name, Owner = organization.Name ?? organization.Login }));
             }
             return repos;
         }

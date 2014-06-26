@@ -10,6 +10,7 @@ namespace Trub.Tracker
     {
         private readonly ITrello trello;
         private bool isAuthorized;
+        private string currentToken;
 
         public TrelloManager(ITrello trello)
         {
@@ -19,11 +20,14 @@ namespace Trub.Tracker
         public IEnumerable<TrelloBoard> GetOpenBoards()
         {
             if (isAuthorized)
-            return trello.Boards.ForMe(BoardFilter.Open).Select(b => new TrelloBoard
             {
-                Id = b.Id,
-                Name = b.Name,
-            });
+                //trello.Tokens.WithToken("currentToken");
+                return trello.Boards.ForMe(BoardFilter.Open).Select(b => new TrelloBoard
+                {
+                    Id = b.Id,
+                    Name = b.Name,
+                });
+            }
             throw new Exception("You must authorize before get open boards");
         }
 
@@ -32,8 +36,9 @@ namespace Trub.Tracker
             return trello.GetAuthorizationUrl("Trub", Scope.ReadWrite, Expiration.Never).ToString();
         }
 
-        public void Authorize(string token = "f0220431655d1096c636251c5677f1844d2a2d82f9ac3ba6df72c8191c97763f")
+        public void Authorize(string token = "bfb3661ecc74a0d18e6ab4754471d81a84f914e7a38277004c262e0e73875730")
         {
+            currentToken = token;
             trello.Authorize(token);
             isAuthorized = true;
         }

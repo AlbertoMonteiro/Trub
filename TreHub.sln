@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreHub", "TreHub\TreHub.csproj", "{C7178EDB-1D8C-43A9-A28B-5E3712914683}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E156E172-BCAB-42D4-9849-ABACE3E1C573} = {E156E172-BCAB-42D4-9849-ABACE3E1C573}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{907AFC94-75AA-4F69-A11F-32E63F6CB0D9}"
 	ProjectSection(SolutionItems) = preProject
